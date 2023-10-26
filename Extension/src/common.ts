@@ -387,6 +387,7 @@ export function resolveVariables(input: string | undefined, additionalEnvironmen
     const cycleCache = new Set<string>();
     while (!cycleCache.has(ret)) {
         cycleCache.add(ret);
+        ret = ret.replace(/([^\\]|^)(\\)([^\\]|$)/g, (_: string, cap1: string, cap2: string, cap3: string) => cap1 + "/" + cap3);
         ret = ret.replace(regexp(), (match: string, ignored1: string, varType: string, ignored2: string, name: string) => {
             // Historically, if the variable didn't have anything before the "." or ":"
             // it was assumed to be an environment variable

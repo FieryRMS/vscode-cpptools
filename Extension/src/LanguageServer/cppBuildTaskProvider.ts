@@ -382,7 +382,7 @@ class CustomBuildTaskTerminal implements Pseudoterminal {
 
     private async doBuild(): Promise<any> {
         // Do build.
-        let command: string = util.resolveVariables(this.command);
+        const command: string = util.resolveVariables(this.command);
         let activeCommand: string = command;
 
         // Create the exe folder path if it doesn't exist.
@@ -428,7 +428,8 @@ class CustomBuildTaskTerminal implements Pseudoterminal {
         };
 
         if (os.platform() === 'win32') {
-            command = `cmd /c chcp 65001>nul && ${command}`;
+            // command = `cmd /c chcp 65001>nul && ${command}`;
+            this.options.shell = "bash";
         }
 
         this.writeEmitter.fire(activeCommand + this.endOfLine);
